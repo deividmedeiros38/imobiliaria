@@ -8,18 +8,23 @@ $sobre    = site_setting('sobre', '');
 $creci    = site_setting('creci', '');
 $cidade   = site_setting('cidade_atuacao', 'Cariri - CE');
 
-$pageTitle = 'Quem sou';
+$pageTitle = 'Sobre';
 $pageDescription = "{$corretor} — corretor de imóveis em {$cidade}.";
 $navActive = 'sobre';
 require BASE_PATH . '/app/Views/public/layout_top.php';
 ?>
 
+<div class="page-banner">
+    <div class="page-banner-inner">
+        <h1>Sobre nós</h1>
+    </div>
+</div>
+
 <section class="section">
-    <div class="about-block" style="max-width:720px">
-        <h2>Quem sou</h2>
-        <p style="font-size:1.1rem;font-weight:bold;color:var(--azul);margin-bottom:4px"><?= e($corretor) ?></p>
+    <div class="about-block">
+        <h2><?= e($corretor) ?></h2>
         <?php if ($creci): ?>
-            <p class="text-muted" style="margin-top:0">CRECI <?= e($creci) ?></p>
+            <p class="text-muted" style="margin-top:-6px">CRECI <?= e($creci) ?></p>
         <?php endif; ?>
 
         <?php if ($sobre !== ''): ?>
@@ -35,9 +40,9 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
         </ul>
 
         <p style="margin-top:22px">
-            <a href="<?= e(url('contato.php')) ?>" class="btn btn-accent">Entrar em contato</a>
+            <a href="<?= e(url('contato.php')) ?>" class="btn">Entrar em contato</a>
             &nbsp;
-            <a href="<?= e(url('imoveis.php')) ?>" class="btn">Ver imóveis</a>
+            <a href="<?= e(url('imoveis.php')) ?>" class="btn btn-outline">Ver imóveis</a>
         </p>
     </div>
 </section>

@@ -25,7 +25,9 @@ $cidade   = site_setting('cidade_atuacao', 'Cariri - CE');
             <p class="footer-title">Menu</p>
             <p><a href="<?= e(url('')) ?>">Início</a></p>
             <p><a href="<?= e(url('imoveis.php')) ?>">Imóveis</a></p>
-            <p><a href="<?= e(url('sobre.php')) ?>">Quem sou</a></p>
+            <p><a href="<?= e(url('imoveis.php?finalidade=venda')) ?>">Venda</a></p>
+            <p><a href="<?= e(url('imoveis.php?finalidade=aluguel')) ?>">Aluguel</a></p>
+            <p><a href="<?= e(url('sobre.php')) ?>">Sobre</a></p>
             <p><a href="<?= e(url('contato.php')) ?>">Contato</a></p>
         </div>
         <div>

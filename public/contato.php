@@ -65,11 +65,13 @@ $wa  = preg_replace('/\D+/', '', site_setting('whatsapp', $tel));
 $em  = site_setting('email', '');
 ?>
 
-<section class="section">
-    <div class="section-head">
-        <h2>Contato</h2>
+<div class="page-banner">
+    <div class="page-banner-inner">
+        <h1>Fale conosco</h1>
     </div>
+</div>
 
+<section class="section">
     <div style="display:grid;gap:28px;max-width:860px">
         <?php if ($imovelRef): ?>
             <p class="text-muted">
@@ -104,12 +106,12 @@ $em  = site_setting('email', '');
                 <span>Autorizo o uso dos meus dados para retorno sobre este contato.</span>
             </label>
 
-            <button type="submit" class="btn btn-accent">Enviar</button>
+            <button type="submit" class="btn">Enviar mensagem</button>
         </form>
 
         <?php if ($tel || $wa || $em): ?>
         <div>
-            <p class="footer-title" style="color:var(--azul)">Ou fale direto:</p>
+            <p style="font-weight:bold;color:var(--verde);margin:0 0 8px">Ou fale direto:</p>
             <?php if ($tel): ?>
                 <p>Tel: <a href="tel:<?= e(preg_replace('/\D+/', '', $tel)) ?>"><?= e($tel) ?></a></p>
             <?php endif; ?>

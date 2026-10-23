@@ -21,23 +21,40 @@ $corretor   = site_setting('corretor_nome', '');
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
+<?php if ($whatsapp !== '' || $telefone !== ''): ?>
+<div class="topbar">
+    <div class="topbar-inner">
+        <span>
+            <?php if ($corretor): ?><?= e($corretor) ?><?php endif; ?>
+            <?php if ($creci): ?> · CRECI <?= e($creci) ?><?php endif; ?>
+        </span>
+        <?php if ($whatsapp !== ''): ?>
+            <a class="topbar-wa" href="https://wa.me/55<?= e($whatsapp) ?>" target="_blank" rel="noopener">
+                WhatsApp <?= e($telefone ?: $whatsapp) ?>
+            </a>
+        <?php elseif ($telefone): ?>
+            <a href="tel:<?= e(preg_replace('/\D+/', '', $telefone)) ?>"><?= e($telefone) ?></a>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+
 <header class="site-header">
     <div class="header-inner">
         <a href="<?= e(url('')) ?>" class="brand">
             <?= e($nomeSite) ?>
-            <?php if ($creci): ?>
-                <span style="font-weight:normal;font-size:0.8rem;opacity:0.85"> · CRECI <?= e($creci) ?></span>
+            <?php if ($corretor && $corretor !== $nomeSite): ?>
+                <small><?= e($corretor) ?></small>
             <?php endif; ?>
         </a>
         <nav class="site-nav" aria-label="Menu principal">
             <a href="<?= e(url('')) ?>" class="<?= ($navActive ?? '') === 'home' ? 'active' : '' ?>">Início</a>
             <a href="<?= e(url('imoveis.php')) ?>" class="<?= ($navActive ?? '') === 'imoveis' ? 'active' : '' ?>">Imóveis</a>
-            <a href="<?= e(url('sobre.php')) ?>" class="<?= ($navActive ?? '') === 'sobre' ? 'active' : '' ?>">Quem sou</a>
+            <a href="<?= e(url('imoveis.php?finalidade=venda')) ?>">Venda</a>
+            <a href="<?= e(url('imoveis.php?finalidade=aluguel')) ?>">Aluguel</a>
+            <a href="<?= e(url('sobre.php')) ?>" class="<?= ($navActive ?? '') === 'sobre' ? 'active' : '' ?>">Sobre</a>
             <a href="<?= e(url('contato.php')) ?>" class="<?= ($navActive ?? '') === 'contato' ? 'active' : '' ?>">Contato</a>
         </nav>
-        <?php if ($whatsapp !== ''): ?>
-            <a class="btn-whatsapp" href="https://wa.me/55<?= e($whatsapp) ?>" target="_blank" rel="noopener">WhatsApp</a>
-        <?php endif; ?>
     </div>
 </header>
 

@@ -76,7 +76,7 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
                 <p class="text-muted" style="margin:0 0 4px;font-size:0.85rem">
                     <?= e(finalidade_label($imovel['finalidade'])) ?>
                     · <?= e($imovel['categoria']) ?>
-                    · Cód. <?= e($imovel['codigo']) ?>
+                    · Ref. <?= e($imovel['codigo']) ?>
                 </p>
                 <h1><?= e($imovel['titulo']) ?></h1>
                 <div class="detail-price">
@@ -91,7 +91,7 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
 
                 <div class="detail-specs">
                     <?php if ((int)$imovel['quartos'] > 0): ?>
-                        <div class="spec"><strong><?= (int)$imovel['quartos'] ?></strong><span>Quartos</span></div>
+                        <div class="spec"><strong><?= (int)$imovel['quartos'] ?></strong><span>Dormitórios</span></div>
                     <?php endif; ?>
                     <?php if ((int)$imovel['suites'] > 0): ?>
                         <div class="spec"><strong><?= (int)$imovel['suites'] ?></strong><span>Suítes</span></div>
@@ -103,7 +103,7 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
                         <div class="spec"><strong><?= (int)$imovel['vagas'] ?></strong><span>Vagas</span></div>
                     <?php endif; ?>
                     <?php if ($imovel['area_construida']): ?>
-                        <div class="spec"><strong><?= e(number_format((float)$imovel['area_construida'], 0, ',', '.')) ?></strong><span>m² construídos</span></div>
+                        <div class="spec"><strong><?= e(number_format((float)$imovel['area_construida'], 0, ',', '.')) ?></strong><span>m²</span></div>
                     <?php endif; ?>
                     <?php if ($imovel['area_terreno']): ?>
                         <div class="spec"><strong><?= e(number_format((float)$imovel['area_terreno'], 0, ',', '.')) ?></strong><span>m² terreno</span></div>
@@ -119,15 +119,16 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
                 <?php endif; ?>
 
                 <div class="detail-cta">
-                    <h3>Interessado?</h3>
-                    <p>Chame no WhatsApp para mais informações ou visita.</p>
+                    <h3>Interessado neste imóvel?</h3>
+                    <p>Chame no WhatsApp ou envie uma mensagem.</p>
                     <?php if ($whatsapp): ?>
-                        <a class="btn btn-accent" href="https://wa.me/55<?= e($whatsapp) ?>?text=<?= $msgWa ?>" target="_blank" rel="noopener">
+                        <a class="btn" href="https://wa.me/55<?= e($whatsapp) ?>?text=<?= $msgWa ?>" target="_blank" rel="noopener">
                             Chamar no WhatsApp
                         </a>
-                    <?php else: ?>
-                        <a class="btn btn-accent" href="<?= e(url('contato.php?imovel=' . (int)$imovel['id'])) ?>">Enviar mensagem</a>
                     <?php endif; ?>
+                    <p style="margin-top:10px">
+                        <a href="<?= e(url('contato.php?imovel=' . (int)$imovel['id'])) ?>">Enviar mensagem pelo site</a>
+                    </p>
                 </div>
             </div>
         </div>
