@@ -136,6 +136,12 @@ CREATE TABLE IF NOT EXISTS configuracoes (
 ) ENGINE=InnoDB;
 
 -- ---------- Dados iniciais ----------
+
+-- Admin padrão (troque a senha no painel após o primeiro login)
+-- E-mail: admin@example.com  |  Senha: Admin12345!
+INSERT INTO administradores (nome, email, senha_hash) VALUES
+ ('Administrador', 'admin@example.com', '$2y$10$GZ3FU6pbft2uYpr4wuSdZu9rhpIQzjItTX1jCNB65z.fz5TVAFcfa')
+ON DUPLICATE KEY UPDATE nome = VALUES(nome);
 INSERT INTO configuracoes (chave, valor) VALUES
  ('nome_site',      'Luciano Rolim Negócios Imobiliários'),
  ('corretor_nome',  'Luciano Rolim'),

@@ -15,6 +15,7 @@
     <strong class="admin-brand"><?= e(site_setting('nome_site', 'Painel')) ?></strong>
     <nav aria-label="Menu do painel">
         <a href="<?= e(url('admin/dashboard.php')) ?>">Resumo</a>
+        <a href="<?= e(url('admin/conta.php')) ?>">Conta</a>
         <a href="<?= e(url('')) ?>" target="_blank" rel="noopener">Ver site</a>
     </nav>
     <form method="post" action="<?= e(url('admin/logout.php')) ?>" class="inline-form">

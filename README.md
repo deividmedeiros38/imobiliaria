@@ -24,8 +24,9 @@ PHP 8+, MySQL/MariaDB, PDO, JavaScript puro. Sem Composer, sem Node.
 2. Inicie **Apache** e **MySQL** no painel do XAMPP.
 3. No phpMyAdmin, aba **Importar**, envie `database/schema.sql`.
 4. Copie `config/app.example.php` → `config/app.php` e `config/database.example.php` → `config/database.php`. Confira usuário/senha do MySQL (XAMPP: `root` e senha vazia).
-5. Crie o primeiro administrador (terminal, na pasta do projeto):
-   `C:\xampp\php\php.exe bin\criar_admin.php`
+5. Já existe um admin padrão no schema (ou crie pelo terminal):
+   - Padrão: e-mail `admin@example.com` · senha `Admin12345!` (troque no painel em Conta)
+   - Ou pelo terminal: `C:\xampp\php\php.exe bin\criar_admin.php`
    A senha é pedida no terminal (mínimo 10 caracteres) e gravada só como hash.
 6. Abra `http://localhost/imobiliaria/public/` e `http://localhost/imobiliaria/public/admin/login.php`.
 
