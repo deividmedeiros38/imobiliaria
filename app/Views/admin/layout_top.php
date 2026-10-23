@@ -15,6 +15,9 @@
     <strong class="admin-brand"><?= e(site_setting('nome_site', 'Painel')) ?></strong>
     <nav aria-label="Menu do painel">
         <a href="<?= e(url('admin/dashboard.php')) ?>">Resumo</a>
+        <a href="<?= e(url('admin/imoveis.php')) ?>">Imóveis</a>
+        <a href="<?= e(url('admin/contatos.php')) ?>">Contatos</a>
+        <a href="<?= e(url('admin/configuracoes.php')) ?>">Config</a>
         <a href="<?= e(url('admin/conta.php')) ?>">Conta</a>
         <a href="<?= e(url('')) ?>" target="_blank" rel="noopener">Ver site</a>
     </nav>

@@ -41,3 +41,35 @@ input[type=email],input[type=password],input[type=text]{width:100%;min-height:2.
 .table-wrap{overflow-x:auto}
 .btn-small{min-height:auto;margin:0;padding:.3rem .7rem;font-size:.82rem}
 .badge{display:inline-block;background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:.1rem .4rem;font-size:.75rem;color:#555;font-weight:600}
+
+.admin-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:1rem}
+.admin-search{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:1rem}
+.admin-search input[type=search]{min-width:16rem;min-height:2.4rem;padding:.4rem .7rem;border:1px solid #8a919c;border-radius:4px;font:inherit}
+.admin-form label{display:block;font-weight:600;margin:1rem 0 .25rem}
+.admin-form input[type=text],.admin-form input[type=email],.admin-form input[type=number],.admin-form input[type=file],.admin-form select,.admin-form textarea{width:100%;min-height:2.5rem;padding:.45rem .7rem;border:1px solid #8a919c;border-radius:4px;font:inherit}
+.admin-form textarea{min-height:8rem;resize:vertical}
+.form-grid{display:grid;gap:0 1rem}
+@media(min-width:640px){.form-grid{grid-template-columns:1fr 1fr}}
+.form-row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;grid-column:1/-1}
+@media(max-width:600px){.form-row-4{grid-template-columns:1fr 1fr}}
+.checks{border:1px solid var(--line);border-radius:6px;padding:.75rem 1rem;margin:1.25rem 0}
+.checks legend{font-weight:600;color:var(--navy);padding:0 .35rem}
+.check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:.35rem}
+.check-item{display:flex;align-items:center;gap:.4rem;font-weight:500;margin:0}
+.check-item input{width:auto;min-height:auto}
+.check-row{display:flex;flex-wrap:wrap;gap:1rem;margin:1rem 0}
+.form-actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-top:1.25rem}
+.btn-secondary{background:#5a6570}
+.btn-secondary:hover{background:#3d4650}
+.btn-danger{background:var(--err)}
+.btn-danger:hover{background:#7a1b1b}
+.actions{display:flex;flex-wrap:wrap;gap:.35rem .6rem;align-items:center;font-size:.88rem}
+.actions a{white-space:nowrap}
+.link-btn{background:none;border:0;padding:0;color:var(--navy);font:inherit;font-size:inherit;cursor:pointer;text-decoration:underline}
+.link-btn.danger{color:var(--err)}
+.foto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem}
+.foto-card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:.5rem;display:flex;flex-direction:column;gap:.4rem}
+.foto-card img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;background:#eee}
+.foto-actions{display:flex;flex-wrap:wrap;gap:.35rem}
+.row-unread{background:#fff8e6}
+.admin-form .btn{margin-top:0}

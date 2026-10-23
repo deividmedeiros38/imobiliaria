@@ -144,3 +144,119 @@ function finalidade_label(string $f): string
 {
     return $f === 'aluguel' ? 'Aluguel' : 'Venda';
 }
+
+/** Converte string de preço BR (1.234,56) para float. */
+function parse_money(string $v): float
+{
+    $v = preg_replace('/[^\d,.\-]/', '', $v) ?? '';
+    if (str_contains($v, ',')) {
+        $v = str_replace('.', '', $v);
+        $v = str_replace(',', '.', $v);
+    }
+    return (float) $v;
+}
+
+/** Garante slug único na tabela imoveis. */
+function unique_imovel_slug(string $base, ?int $ignoreId = null): string
+{
+    $slug = slugify($base);
+    $n = 0;
+    while (true) {
+        $try = $n === 0 ? $slug : $slug . '-' . $n;
+        $sql = 'SELECT id FROM imoveis WHERE slug = ?';
+        $params = [$try];
+        if ($ignoreId) {
+            $sql .= ' AND id != ?';
+            $params[] = $ignoreId;
+        }
+        $st = db()->prepare($sql . ' LIMIT 1');
+        $st->execute($params);
+        if (!$st->fetch()) {
+            return $try;
+        }
+        $n++;
+        if ($n > 50) {
+            return $slug . '-' . bin2hex(random_bytes(3));
+        }
+    }
+}
+
+/** Garante código único. */
+function unique_imovel_codigo(string $codigo, ?int $ignoreId = null): string
+{
+    $codigo = strtoupper(preg_replace('/[^A-Za-z0-9\-]/', '', $codigo) ?? '');
+    if ($codigo === '') {
+        $codigo = 'IMO-' . strtoupper(bin2hex(random_bytes(3)));
+    }
+    $sql = 'SELECT id FROM imoveis WHERE codigo = ?';
+    $params = [$codigo];
+    if ($ignoreId) {
+        $sql .= ' AND id != ?';
+        $params[] = $ignoreId;
+    }
+    $st = db()->prepare($sql . ' LIMIT 1');
+    $st->execute($params);
+    if ($st->fetch()) {
+        return unique_imovel_codigo($codigo . '-' . strtoupper(bin2hex(random_bytes(2))), $ignoreId);
+    }
+    return $codigo;
+}
+
+/**
+ * Salva upload de imagem em public/uploads/.
+ * Retorna nome do arquivo ou null em caso de erro (mensagem em $error).
+ */
+function save_upload_image(array $file, ?string &$error = null): ?string
+{
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        $error = 'Nenhum arquivo enviado.';
+        return null;
+    }
+    if (($file['error'] ?? 0) !== UPLOAD_ERR_OK) {
+        $error = 'Falha no upload (código ' . (int)$file['error'] . ').';
+        return null;
+    }
+    if (($file['size'] ?? 0) > 5 * 1024 * 1024) {
+        $error = 'Arquivo maior que 5 MB.';
+        return null;
+    }
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($file['tmp_name']) ?: '';
+    $map = [
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/webp' => 'webp',
+        'image/gif'  => 'gif',
+    ];
+    if (!isset($map[$mime])) {
+        $error = 'Formato não permitido. Use JPG, PNG, WEBP ou GIF.';
+        return null;
+    }
+
+    $dir = BASE_PATH . '/public/uploads';
+    if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
+        $error = 'Não foi possível criar a pasta de uploads.';
+        return null;
+    }
+
+    $nome = bin2hex(random_bytes(16)) . '.' . $map[$mime];
+    $dest = $dir . '/' . $nome;
+    if (!move_uploaded_file($file['tmp_name'], $dest)) {
+        $error = 'Falha ao salvar o arquivo.';
+        return null;
+    }
+    return $nome;
+}
+
+function delete_upload_file(?string $arquivo): void
+{
+    if (!$arquivo) {
+        return;
+    }
+    $arquivo = basename($arquivo);
+    $path = BASE_PATH . '/public/uploads/' . $arquivo;
+    if (is_file($path)) {
+        @unlink($path);
+    }
+}
