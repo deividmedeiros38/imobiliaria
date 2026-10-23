@@ -144,7 +144,7 @@ INSERT INTO configuracoes (chave, valor) VALUES
  ('whatsapp',       '88981141527'),
  ('email',          'corretor.lucianorolim@gmail.com'),
  ('cidade_atuacao', 'Juazeiro do Norte e Região do Cariri - CE'),
- ('sobre',          'Corretor de Imóveis, iniciou suas atividades visando construir a sua história no mercado imobiliário da Região do Cariri, de forma sólida e confiável. Atuante no mercado imobiliário desde 2012 com ética, profissionalismo e transparência nas negociações.'),
+ ('sobre',          'Corretor de imóveis na região do Cariri desde 2012. Atendimento direto, com transparência nas negociações. Também atua com avaliações de imóveis.'),
  ('logotipo',       '')
 ON DUPLICATE KEY UPDATE chave = chave;
 

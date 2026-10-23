@@ -4,72 +4,42 @@ require __DIR__ . '/../includes/bootstrap.php';
 
 $nomeSite = site_setting('nome_site', 'Imobiliária');
 $corretor = site_setting('corretor_nome', 'Corretor de Imóveis');
-$sobre    = site_setting('sobre', 'Atendimento personalizado com ética, profissionalismo e transparência.');
+$sobre    = site_setting('sobre', '');
 $creci    = site_setting('creci', '');
 $cidade   = site_setting('cidade_atuacao', 'Cariri - CE');
 
 $pageTitle = 'Quem sou';
-$pageDescription = "Conheça {$corretor} — corretor de imóveis na região do Cariri.";
+$pageDescription = "{$corretor} — corretor de imóveis em {$cidade}.";
 $navActive = 'sobre';
 require BASE_PATH . '/app/Views/public/layout_top.php';
 ?>
 
 <section class="section">
-    <div class="about-block" style="max-width:820px;margin:0 auto">
-        <div class="about-text">
-            <h2>Quem sou</h2>
-            <p style="font-size:1.05rem;font-weight:600;color:var(--navy)"><?= e($corretor) ?></p>
-            <?php if ($creci): ?>
-                <p class="text-muted" style="margin-top:-.4rem">CRECI <?= e($creci) ?></p>
-            <?php endif; ?>
-            <p><?= nl2br(e($sobre)) ?></p>
-            <p>
-                Atuo com ética, profissionalismo e transparência nas negociações.
-                Ofereço aos clientes um atendimento personalizado, o que resulta em segurança
-                a todos os negócios realizados.
-            </p>
-            <p>
-                Conhecimento profundo do mercado imobiliário da região de <?= e($cidade) ?>,
-                com foco em confiança e resultados.
-            </p>
-        </div>
-        <div class="about-highlights">
-            <div class="highlight">
-                <div class="highlight-icon">1</div>
-                <div>
-                    <strong>Confiança</strong>
-                    <span>Relacionamento transparente em cada etapa da negociação</span>
-                </div>
-            </div>
-            <div class="highlight">
-                <div class="highlight-icon">2</div>
-                <div>
-                    <strong>Profissionalismo</strong>
-                    <span>Orientação técnica e acompanhamento completo</span>
-                </div>
-            </div>
-            <div class="highlight">
-                <div class="highlight-icon">3</div>
-                <div>
-                    <strong>Mercado local</strong>
-                    <span>Especialista na região do Cariri (CE)</span>
-                </div>
-            </div>
-            <div class="highlight">
-                <div class="highlight-icon">4</div>
-                <div>
-                    <strong>Resultados</strong>
-                    <span>Compromisso com o sucesso da sua compra ou venda</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="about-block" style="max-width:720px">
+        <h2>Quem sou</h2>
+        <p style="font-size:1.1rem;font-weight:bold;color:var(--azul);margin-bottom:4px"><?= e($corretor) ?></p>
+        <?php if ($creci): ?>
+            <p class="text-muted" style="margin-top:0">CRECI <?= e($creci) ?></p>
+        <?php endif; ?>
 
-    <p style="text-align:center;margin-top:2rem">
-        <a href="<?= e(url('contato.php')) ?>" class="btn btn-accent">Fale comigo</a>
-        &nbsp;
-        <a href="<?= e(url('imoveis.php')) ?>" class="btn">Ver imóveis</a>
-    </p>
+        <?php if ($sobre !== ''): ?>
+            <p><?= nl2br(e($sobre)) ?></p>
+        <?php else: ?>
+            <p>Corretor de imóveis na região do Cariri. Atendimento direto, com foco em transparência nas negociações.</p>
+        <?php endif; ?>
+
+        <ul class="about-list">
+            <li>Atendimento personalizado</li>
+            <li>Orientação em documentação</li>
+            <li>Mercado de <?= e($cidade) ?></li>
+        </ul>
+
+        <p style="margin-top:22px">
+            <a href="<?= e(url('contato.php')) ?>" class="btn btn-accent">Entrar em contato</a>
+            &nbsp;
+            <a href="<?= e(url('imoveis.php')) ?>" class="btn">Ver imóveis</a>
+        </p>
+    </div>
 </section>
 
 <?php require BASE_PATH . '/app/Views/public/layout_bottom.php'; ?>

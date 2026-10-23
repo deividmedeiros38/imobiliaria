@@ -14,7 +14,6 @@ if ($imovelId > 0) {
 }
 
 $erro = '';
-$sucesso = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_require();
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($mensagem === '' || mb_strlen($mensagem) < 10) {
         $erro = 'Escreva uma mensagem com pelo menos 10 caracteres.';
     } elseif (!$consent) {
-        $erro = 'É necessário aceitar a política de privacidade (LGPD).';
+        $erro = 'É necessário autorizar o uso dos dados para retorno do contato.';
     } else {
         $finalidade = $imovelRef
             ? 'Interesse no imóvel ' . $imovelRef['codigo']
@@ -51,27 +50,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $finalidade,
             client_ip(),
         ]);
-        $sucesso = true;
-        flash('success', 'Mensagem enviada com sucesso! Em breve entraremos em contato.');
+        flash('success', 'Mensagem enviada. Em breve retornamos o contato.');
         redirect('contato.php');
     }
 }
 
 $pageTitle = 'Contato';
-$pageDescription = 'Entre em contato e tire suas dúvidas sobre imóveis.';
+$pageDescription = 'Fale com o corretor.';
 $navActive = 'contato';
 require BASE_PATH . '/app/Views/public/layout_top.php';
+
+$tel = site_setting('telefone', '');
+$wa  = preg_replace('/\D+/', '', site_setting('whatsapp', $tel));
+$em  = site_setting('email', '');
 ?>
 
 <section class="section">
     <div class="section-head">
-        <h2>Fale conosco</h2>
+        <h2>Contato</h2>
     </div>
 
-    <div style="display:grid;gap:2rem;max-width:900px">
+    <div style="display:grid;gap:28px;max-width:860px">
         <?php if ($imovelRef): ?>
             <p class="text-muted">
-                Assunto: interesse no imóvel <strong><?= e($imovelRef['codigo']) ?></strong> — <?= e($imovelRef['titulo']) ?>
+                Sobre o imóvel <strong><?= e($imovelRef['codigo']) ?></strong> — <?= e($imovelRef['titulo']) ?>
             </p>
         <?php endif; ?>
 
@@ -88,40 +90,37 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
             <label for="nome">Nome *</label>
             <input type="text" id="nome" name="nome" required maxlength="120" value="<?= e(post_str('nome', 120)) ?>" autocomplete="name">
 
+            <label for="telefone">Telefone / WhatsApp</label>
+            <input type="text" id="telefone" name="telefone" maxlength="30" value="<?= e(post_str('telefone', 30)) ?>" autocomplete="tel" placeholder="(88) 9xxxx-xxxx">
+
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" maxlength="190" value="<?= e(post_str('email', 190)) ?>" autocomplete="email">
 
-            <label for="telefone">Telefone / WhatsApp</label>
-            <input type="text" id="telefone" name="telefone" maxlength="30" value="<?= e(post_str('telefone', 30)) ?>" autocomplete="tel" placeholder="(88) 99999-9999">
-
             <label for="mensagem">Mensagem *</label>
-            <textarea id="mensagem" name="mensagem" required maxlength="3000" placeholder="Como podemos ajudar?"><?= e(post_str('mensagem', 3000)) ?></textarea>
+            <textarea id="mensagem" name="mensagem" required maxlength="3000"><?= e(post_str('mensagem', 3000)) ?></textarea>
 
             <label class="form-check">
                 <input type="checkbox" name="consentimento" value="1" <?= !empty($_POST['consentimento']) ? 'checked' : '' ?> required>
-                <span>Autorizo o uso dos meus dados para retorno sobre este contato, conforme a LGPD. *</span>
+                <span>Autorizo o uso dos meus dados para retorno sobre este contato.</span>
             </label>
 
-            <button type="submit" class="btn btn-accent">Enviar mensagem</button>
+            <button type="submit" class="btn btn-accent">Enviar</button>
         </form>
 
+        <?php if ($tel || $wa || $em): ?>
         <div>
-            <h3 style="color:var(--navy);margin:0 0 .75rem;font-size:1.1rem">Outros canais</h3>
-            <?php
-            $tel = site_setting('telefone', '');
-            $wa  = preg_replace('/\D+/', '', site_setting('whatsapp', $tel));
-            $em  = site_setting('email', '');
-            ?>
+            <p class="footer-title" style="color:var(--azul)">Ou fale direto:</p>
             <?php if ($tel): ?>
-                <p>Telefone: <a href="tel:<?= e(preg_replace('/\D+/', '', $tel)) ?>"><?= e($tel) ?></a></p>
+                <p>Tel: <a href="tel:<?= e(preg_replace('/\D+/', '', $tel)) ?>"><?= e($tel) ?></a></p>
             <?php endif; ?>
             <?php if ($wa): ?>
-                <p>WhatsApp: <a href="https://wa.me/55<?= e($wa) ?>" target="_blank" rel="noopener">Enviar mensagem</a></p>
+                <p>WhatsApp: <a href="https://wa.me/55<?= e($wa) ?>" target="_blank" rel="noopener"><?= e($tel ?: $wa) ?></a></p>
             <?php endif; ?>
             <?php if ($em): ?>
                 <p>E-mail: <a href="mailto:<?= e($em) ?>"><?= e($em) ?></a></p>
             <?php endif; ?>
         </div>
+        <?php endif; ?>
     </div>
 </section>
 
