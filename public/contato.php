@@ -66,13 +66,13 @@ $em  = site_setting('email', '');
 ?>
 
 <div class="page-banner">
-    <div class="page-banner-inner">
+    <div class="container">
         <h1>Fale conosco</h1>
     </div>
 </div>
 
 <section class="section">
-    <div style="display:grid;gap:28px;max-width:860px">
+    <div class="container contact-layout">
         <?php if ($imovelRef): ?>
             <p class="text-muted">
                 Sobre o imóvel <strong><?= e($imovelRef['codigo']) ?></strong> — <?= e($imovelRef['titulo']) ?>
@@ -106,12 +106,12 @@ $em  = site_setting('email', '');
                 <span>Autorizo o uso dos meus dados para retorno sobre este contato.</span>
             </label>
 
-            <button type="submit" class="btn">Enviar mensagem</button>
+            <button type="submit" class="button button-primary">Enviar mensagem</button>
         </form>
 
         <?php if ($tel || $wa || $em): ?>
-        <div>
-            <p style="font-weight:bold;color:var(--verde);margin:0 0 8px">Ou fale direto:</p>
+        <div class="contact-direct">
+            <h2>Ou fale direto</h2>
             <?php if ($tel): ?>
                 <p>Tel: <a href="tel:<?= e(preg_replace('/\D+/', '', $tel)) ?>"><?= e($tel) ?></a></p>
             <?php endif; ?>

@@ -39,9 +39,9 @@ $dados = [
     'suites' => (int)($imovel['suites'] ?? 0),
     'banheiros' => (int)($imovel['banheiros'] ?? 0),
     'vagas' => (int)($imovel['vagas'] ?? 0),
-    'area_construida' => $imovel['area_construida'] !== null && $imovel['area_construida'] !== ''
+    'area_construida' => ($imovel['area_construida'] ?? '') !== ''
         ? number_format((float)$imovel['area_construida'], 2, ',', '.') : '',
-    'area_terreno' => $imovel['area_terreno'] !== null && $imovel['area_terreno'] !== ''
+    'area_terreno' => ($imovel['area_terreno'] ?? '') !== ''
         ? number_format((float)$imovel['area_terreno'], 2, ',', '.') : '',
     'ativo' => $imovel ? (int)$imovel['ativo'] : 1,
     'destaque' => $imovel ? (int)$imovel['destaque'] : 0,

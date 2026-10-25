@@ -15,16 +15,17 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
 ?>
 
 <div class="page-banner">
-    <div class="page-banner-inner">
+    <div class="container">
         <h1>Sobre nós</h1>
     </div>
 </div>
 
 <section class="section">
+    <div class="container">
     <div class="about-block">
         <h2><?= e($corretor) ?></h2>
         <?php if ($creci): ?>
-            <p class="text-muted" style="margin-top:-6px">CRECI <?= e($creci) ?></p>
+            <p class="text-muted">CRECI <?= e($creci) ?></p>
         <?php endif; ?>
 
         <?php if ($sobre !== ''): ?>
@@ -39,11 +40,11 @@ require BASE_PATH . '/app/Views/public/layout_top.php';
             <li>Mercado de <?= e($cidade) ?></li>
         </ul>
 
-        <p style="margin-top:22px">
-            <a href="<?= e(url('contato.php')) ?>" class="btn">Entrar em contato</a>
-            &nbsp;
-            <a href="<?= e(url('imoveis.php')) ?>" class="btn btn-outline">Ver imóveis</a>
-        </p>
+        <div class="about-actions">
+            <a href="<?= e(url('contato.php')) ?>" class="button button-primary">Entrar em contato</a>
+            <a href="<?= e(url('imoveis.php')) ?>" class="button button-outline">Ver imóveis</a>
+        </div>
+    </div>
     </div>
 </section>
 

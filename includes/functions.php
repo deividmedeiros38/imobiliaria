@@ -260,3 +260,61 @@ function delete_upload_file(?string $arquivo): void
         @unlink($path);
     }
 }
+
+// ---------- Apoio ao site público ----------
+
+/** "1 quarto" / "3 quartos": evita textos como "1 vagas". */
+function plural(int $n, string $singular, string $plural): string
+{
+    return $n . ' ' . ($n === 1 ? $singular : $plural);
+}
+
+/** Número do WhatsApp só com dígitos (vazio se não houver nenhum configurado). */
+function whatsapp_number(): string
+{
+    return preg_replace('/\D+/', '', site_setting('whatsapp', site_setting('telefone', ''))) ?? '';
+}
+
+/** Link wa.me com mensagem opcional. Retorna '' se o WhatsApp não estiver configurado. */
+function whatsapp_url(string $mensagem = ''): string
+{
+    $numero = whatsapp_number();
+    if ($numero === '') {
+        return '';
+    }
+    $url = 'https://wa.me/55' . $numero;
+    return $mensagem === '' ? $url : $url . '?text=' . rawurlencode($mensagem);
+}
+
+/** Área de exibição do imóvel: construída, ou do terreno quando não houver. */
+function imovel_area(array $imovel): ?float
+{
+    $area = (float) ($imovel['area_construida'] ?: $imovel['area_terreno']);
+    return $area > 0 ? $area : null;
+}
+
+/**
+ * Imóveis ativos para as vitrines da home.
+ * $finalidade: 'venda', 'aluguel' ou null (todas). $soDestaque: só os marcados como destaque.
+ */
+function imoveis_para_home(?string $finalidade = null, bool $soDestaque = false, int $limite = 3): array
+{
+    $sql = 'SELECT i.*, c.nome AS categoria
+              FROM imoveis i
+              JOIN categorias c ON c.id = i.categoria_id
+             WHERE i.ativo = 1';
+    $params = [];
+    if ($finalidade !== null) {
+        $sql .= ' AND i.finalidade = ?';
+        $params[] = $finalidade;
+    }
+    if ($soDestaque) {
+        $sql .= ' AND i.destaque = 1';
+    }
+    $sql .= ' ORDER BY i.destaque DESC, i.atualizado_em DESC LIMIT ' . max(1, $limite);
+
+    $st = db()->prepare($sql);
+    $st->execute($params);
+    return $st->fetchAll();
+}
+
