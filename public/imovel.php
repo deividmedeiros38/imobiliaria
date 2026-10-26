@@ -152,11 +152,11 @@ if ($imovel['area_terreno'])        { $medidas[] = [number_format((float) $imove
 
                     <div class="detail-cta">
                         <h2>Interessado neste imóvel?</h2>
-                        <p>Fale agora com <?= e($corretor !== '' ? $corretor : 'um corretor') ?> e tire suas dúvidas.</p>
+                        <p>Fale agora com <?= e($corretor !== '' ? $corretor : 'um corretor') ?>. Atendimento rápido pelo WhatsApp.</p>
                         <?php if ($whatsappUrl !== ''): ?>
-                            <a class="button button-whatsapp" href="<?= e($whatsappUrl) ?>" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+                            <a class="button button-whatsapp" href="<?= e($whatsappUrl) ?>" target="_blank" rel="noopener">Falar no WhatsApp</a>
                         <?php endif; ?>
-                        <a class="detail-cta-link" href="<?= e(url('contato.php?imovel=' . (int) $imovel['id'])) ?>">Enviar mensagem pelo site</a>
+                        <a class="detail-cta-link" href="<?= e(url('contato.php?imovel=' . (int) $imovel['id'])) ?>">Ou envie mensagem pelo site</a>
                     </div>
                 </div>
 
@@ -225,6 +225,16 @@ if ($imovel['area_terreno'])        { $medidas[] = [number_format((float) $imove
     </div>
     <script type="application/json" id="galeria-dados"><?= json_encode($fotosJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
     <script src="<?= e(url('assets/js/galeria.js')) ?>" defer></script>
+<?php endif; ?>
+
+<?php if ($whatsappUrl !== ''): ?>
+    <div class="sticky-wa-bar" aria-hidden="false">
+        <div class="sticky-wa-info">
+            <strong><?= e(money($imovel['preco'])) ?><?php if ($aluguel): ?><small>/mês</small><?php endif; ?></strong>
+            <span>Ref. <?= e($imovel['codigo']) ?></span>
+        </div>
+        <a class="button button-whatsapp sticky-wa-btn" href="<?= e($whatsappUrl) ?>" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
 <?php endif; ?>
 
 <?php require BASE_PATH . '/app/Views/public/layout_bottom.php'; ?>
